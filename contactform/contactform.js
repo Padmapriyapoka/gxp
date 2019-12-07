@@ -6,6 +6,7 @@ jQuery(document).ready(function($) {
     var f = $(this).find('.form-group'),
       ferror = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+      mobileExp =/\d{10}/i;
 
     f.children('input').each(function() { // run all inputs
 
@@ -40,6 +41,12 @@ jQuery(document).ready(function($) {
               ferror = ierror = true;
             }
             break;
+          
+          case 'phone':
+              if (!mobileExp.test(i.val())) {
+                ferror = ierror = true;
+              }
+              break;
 
           case 'checked':
             if (! i.is(':checked')) {
@@ -88,8 +95,9 @@ jQuery(document).ready(function($) {
         i.next('.validation').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
       }
     });
-    if (ferror) return false;
+    if (ferror) return false;    
     else var str = $(this).serialize();
+    alert('here');
     var action = $(this).attr('action');
     if( ! action ) {
       action = 'contactform/contactform.php';
